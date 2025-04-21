@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevBook - Add Book</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-900 text-gray-200 min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-dark-800 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-primary-500 text-xl font-bold">DevBook</span>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="index.html" class="border-transparent text-gray-300 hover:border-gray-300 hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Dashboard
+                        </a>
+                        <a href="books.html" class="border-primary-500 text-primary-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Books
+                        </a>
+                        <a href="categories.html" class="border-transparent text-gray-300 hover:border-gray-300 hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Categories
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                    <div class="ml-3 relative">
+                        <div>
+                            <a href="login.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                            <a href="signup.html" class="bg-primary-600 hover:bg-primary-700 text-white px-3 py-2 rounded-md text-sm font-medium">Sign up</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu, show/hide based on menu state. -->
+        <div class="sm:hidden" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="index.html" class="border-transparent text-gray-300 hover:bg-gray-700 hover:text-white block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Dashboard</a>
+                <a href="books.html" class="bg-dark-800 text-primary-500 block pl-3 pr-4 py-2 border-l-4 border-primary-500 text-base font-medium">Books</a>
+                <a href="categories.html" class="border-transparent text-gray-300 hover:bg-gray-700 hover:text-white block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Categories</a>
+                <a href="login.html" class="border-transparent text-gray-300 hover:bg-gray-700 hover:text-white block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Login</a>
+                <a href="signup.html" class="border-transparent text-gray-300 hover:bg-gray-700 hover:text-white block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Sign up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <!-- Page header -->
+            <div class="px-4 py-4 sm:px-0">
+                <div class="md:flex md:items-center md:justify-between">
+                    <div class="flex-1 min-w-0">
+                        <h1 class="text-2xl font-bold leading-7 text-white sm:text-3xl sm:truncate">Add New Book</h1>
+                    </div>
+                    <div class="mt-4 flex md:mt-0 md:ml-4">
+                        <a href="books.html" class="inline-flex items-center px-4 py-2 border border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-300 bg-dark-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                            <i class="fas fa-arrow-left -ml-1 mr-2"></i>
+                            Back to Books
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Book Form -->
+            <div class="mt-5 px-4 sm:px-0">
+                <div class="bg-dark-800 shadow overflow-hidden sm:rounded-lg border border-gray-700">
+                    <form action="#" method="POST" class="p-6">
+                        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                            <div class="sm:col-span-4">
+                                <label for="title" class="block text-sm font-medium text-gray-300">Title</label>
+                                <div class="mt-1">
+                                    <input type="text" name="title" id="title" class="bg-gray-700 border border-gray-600 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm rounded-md text-white" placeholder="Book title">
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-4">
+                                <label for="author" class="block text-sm font-medium text-gray-300">Author</label>
+                                <div class="mt-1">
+                                    <input type="text" name="author" id="author" class="bg-gray-700 border border-gray-600 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm rounded-md text-white" placeholder="Author name">
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-3">
+                                <label for="category" class="block text-sm font-medium text-gray-300">Category</label>
+                                <div class="mt-1">
+                                    <select id="category" name="category" class="bg-gray-700 border border-gray-600 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm rounded-md text-white">
+                                        <option value="">Select a category</option>
+                                        <option value="programming">Programming</option>
+                                        <option value="design-patterns">Design Patterns</option>
+                                        <option value="javascript">JavaScript</option>
+                                        <option value="python">Python</option>
+                                        <option value="web-development">Web Development</option>
+                                        <option value="devops">DevOps</option>
+                                        <option value="databases">Databases</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-3">
+                                <label for="status" class="block text-sm font-medium text-gray-300">Reading Status</label>
+                                <div class="mt-1">
+                                    <select id="status" name="status" class="bg-gray-700 border border-gray-600 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm rounded-md text-white">
+                                        <option value="">Select a status</option>
+                                        <option value="read">Read</option>
+                                        <option value="reading">Currently Reading</option>
+                                        <option value="to-read">To Read</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-6">
+                                <label for="isbn" class="block text-sm font-medium text-gray-300">ISBN</label>
+                                <div class="mt-1">
+                                    <input type="text" name="isbn" id="isbn" class="bg-gray-700 border border-gray-600 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm rounded-md text-white" placeholder="ISBN number">
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-6">
+                                <label for="publication-date" class="block text-sm font-medium text-gray-300">Publication Date</label>
+                                <div class="mt-1">
+                                    <input type="date" name="publication-date" id="publication-date" class="bg-gray-700 border border-gray-600 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm rounded-md text-white">
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-6">
+                                <label for="description" class="block text-sm font-medium text-gray-300">Description</label>
+                                <div class="mt-1">
+                                    <textarea id="description" name="description" rows="4" class="bg-gray-700 border border-gray-600 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm rounded-md text-white" placeholder="Book description"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-6">
+                                <label for="cover-url" class="block text-sm font-medium text-gray-300">Cover Image URL (optional)</label>
+                                <div class="mt-1">
+                                    <input type="text" name="cover-url" id="cover-url" class="bg-gray-700 border border-gray-600 focus:ring-primary-500 focus:border-primary-500 block w-full shadow-sm sm:text-sm rounded-md text-white" placeholder="https://example.com/book-cover.jpg">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex justify-end">
+                            <button type="button" class="bg-gray-700 py-2 px-4 border border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-300 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                                Cancel
+                            </button>
+                            <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-800 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="flex justify-center md:order-2">
+                    <a href="#" class="text-gray-400 hover:text-gray-300">
+                        <span class="sr-only">GitHub</span>
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+                <div class="mt-8 md:mt-0 md:order-1">
+                    <p class="text-center text-base text-gray-400">&copy; 2023 DevBook. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('button[aria-controls="mobile-menu"]').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const expanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !expanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
