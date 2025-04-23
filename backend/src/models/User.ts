@@ -2,7 +2,7 @@ import type { RowDataPacket } from "mysql2";
 import db from "../db";
 import Model from "./Model";
 
-interface UserType {
+export interface UserType {
     id?: number;
     username: string;
     email: string;
