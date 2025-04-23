@@ -6,15 +6,12 @@ import AuthService from "../services/AuthService";
 class AuthController {
 
     static async register(req: Request, res: Response) {
-        const { username, email, password } = req.body;
-        const token = await AuthService.register(username, email, password);
+        const token = await AuthService.register(req.body);
         res.status(201).json({ token });
     }
 
     static async login(req: Request, res: Response) {
-        const { email, password } = req.body;
-
-        const token = await AuthService.login(email, password);
+        const token = await AuthService.login(req.body);
 
         if (token) {
             res.status(201).json({ token });
