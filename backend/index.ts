@@ -1,8 +1,10 @@
-const server = Bun.serve({
-    port: 3000,
-    fetch(req) {
-        return new Response("hello world");
-    }
-})
+import app from './src/app';
+import initDB from './src/db/init';
 
-console.log(`Server running at http://localhost:${server.port}`);
+const port = process.env.API_PORT || 6969;
+
+initDB().then(() => {
+    app.listen(port, () => {
+        console.log(`Server is running on port http://localhost:${port}`);
+    });
+});
