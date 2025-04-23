@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS users;
+
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -18,8 +22,8 @@ CREATE TABLE books (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
-    category_id INT NULL ON DELETE SET NULL,
-    user_id INT ON DELETE CASCADE,
+    category_id INT NULL,
+    user_id INT,
     pdf_path TEXT DEFAULT NULL,
     cover_path TEXT DEFAULT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
