@@ -19,8 +19,10 @@ abstract class Model<T> {
         return rows[0] as T || null;
     }
 
-    async delete(id: number): Promise<void> {
-        await db.query(`DELETE FROM ${this.table} WHERE id = ?`, id);
+    async delete(id: number): Promise<boolean> {
+        const res = await db.query(`DELETE FROM ${this.table} WHERE id = ?`, id);
+
+        return res ? true : false;
     }
 
     async create(data: Partial<T>): Promise<T> {

@@ -1,5 +1,4 @@
 import Book, { type BookType } from "../models/Book";
-import { validateBookData } from "../util/validator";
 import { CreateBookSchema, type CreateBookInput } from "../util/validator/book.validator";
 
 const model = new Book();
@@ -8,6 +7,11 @@ class BookService {
 
     static async all() {
         return await model.all();
+    }
+
+    static async show(id: number){
+        const book = model.find(id);
+        return book ?? null;
     }
 
     static async create(data: CreateBookInput) {
@@ -29,6 +33,10 @@ class BookService {
 
         const book = await model.create(bookData);
         return book;
+    }
+
+    static async delete(id: number){
+        return model.delete(id);
     }
 
 }
