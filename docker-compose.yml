@@ -1,0 +1,57 @@
+services:
+  backend:
+    image: oven/bun:latest
+    container_name: bun-backend
+    working_dir: /app
+    command: sh -c "bun run index.ts"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "6969:6969"
+    networks:
+      - devbook-network
+
+  db:
+    image: mysql:latest
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: devbook
+      MYSQL_USER: ana
+      MYSQL_PASSWORD: nta
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - devbook-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+  frontend:
+    image: node:20-alpine
+    container_name: vite-frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - devbook-network
+
+volumes:
+  db_data:
+
+networks:
+  devbook-network:
+    driver: bridge
