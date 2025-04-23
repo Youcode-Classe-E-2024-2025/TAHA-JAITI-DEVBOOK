@@ -21,7 +21,7 @@ class BookService {
             throw parsed.error;
         }
 
-        const { title, author, description, cover_path, pdf_path, user_id } = parsed.data;
+        const { title, author, cover_path, pdf_path, user_id } = parsed.data;
 
         const bookData: Partial<BookType> = {
             title,
