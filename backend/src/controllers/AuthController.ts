@@ -5,7 +5,6 @@ import pool from '../utils/db';
 import { config } from '../utils/config';
 
 export class AuthController {
-    // Register a new user
     async register(req: Request, res: Response): Promise<void> {
         try {
             const { name, email, password } = req.body;
@@ -37,7 +36,6 @@ export class AuthController {
             const token = jwt.sign(
                 { id: userId, email, name },
                 config.auth.jwtSecret,
-                { expiresIn: config.auth.expiresIn }
             );
 
             res.status(201).json({
@@ -85,7 +83,6 @@ export class AuthController {
             const token = jwt.sign(
                 { id: user.id, email: user.email, name: user.name },
                 config.auth.jwtSecret,
-                { expiresIn: config.auth.expiresIn }
             );
 
             res.json({
