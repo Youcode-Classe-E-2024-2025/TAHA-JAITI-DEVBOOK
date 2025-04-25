@@ -1,17 +1,7 @@
-import Model from "./Model";
-
-export interface CategoryType {
-    id: number;
+export interface Category {
+    id?: number;
     name: string;
-    created_at: string;
-    updated_at: string;
-}
-
-
-export default class Category extends Model<CategoryType> {
-
-    constructor() {
-        super('categories');
-    }
-
+    description: string;
+    created_at?: Date;
+    updated_at?: Date;
 }
