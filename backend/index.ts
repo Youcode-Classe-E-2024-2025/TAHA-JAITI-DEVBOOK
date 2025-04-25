@@ -1,10 +1,9 @@
-import app from './src/app';
-import initDB from './src/db/init';
+import app from "./src/app.js";
+import initDB from "./src/utils/init.js";
 
-const port = process.env.API_PORT || 6969;
-
+const port = 6969;
 initDB().then(() => {
     app.listen(port, () => {
-        console.log(`Server is running on port http://localhost:${port}`);
+        console.log(`DevBook API server is running on http://localhost:${port}`);
     });
-});
+})
