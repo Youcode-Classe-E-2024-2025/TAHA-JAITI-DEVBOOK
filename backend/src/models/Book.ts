@@ -1,25 +1,11 @@
-import Model from "./Model";
-
-export interface BookType {
+export interface Book {
     id?: number;
     title: string;
     author: string;
     category_id: number;
-    user_id: number;
-    pdf_path: string;
-    cover_path: string;
-    created_at?: string;
-    updated_at?: string;
+    difficulty: 'beginner' | 'intermediate' | 'advanced';
+    status: 'to-read' | 'in-progress' | 'completed';
+    publication_date: Date;
+    created_at?: Date;
+    updated_at?: Date;
 }
-
-class Book extends Model<BookType>{
-
-    constructor(){
-        super('books');
-    }
-
-
-
-}
-
-export default Book;
