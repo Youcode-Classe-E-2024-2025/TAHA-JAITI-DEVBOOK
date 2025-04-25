@@ -1,29 +1,125 @@
-import type { Request, Response } from "express";
-import AuthService from "../services/AuthService";
+import type { Request, Response } from 'express';
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken';
+import pool from '../utils/db';
+import { config } from '../utils/config';
 
+export class AuthController {
+    // Register a new user
+    async register(req: Request, res: Response): Promise<void> {
+        try {
+            const { name, email, password } = req.body;
 
+            if (!name || !email || !password) {
+                res.status(400).json({ message: 'All fields are required' });
+                return;
+            }
 
-class AuthController {
+            const [existingUser] = await pool.query(
+                'SELECT * FROM users WHERE email = ?',
+                [email]
+            );
 
-    static async register(req: Request, res: Response) {
-        const token = await AuthService.register(req.body);
-        res.status(201).json({ token });
-    }
+            if ((existingUser as any[]).length > 0) {
+                res.status(409).json({ message: 'User with this email already exists' });
+                return;
+            }
 
-    static async login(req: Request, res: Response) {
-        const token = await AuthService.login(req.body);
+            const hash = await bcrypt.hash(password, 10);
 
-        if (token) {
-            res.status(201).json({ token });
+            const result = await pool.query(
+                'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
+                [name, email, hash]
+            );
+
+            const userId = (result[0] as any).insertId;
+
+            const token = jwt.sign(
+                { id: userId, email, name },
+                config.auth.jwtSecret,
+                { expiresIn: config.auth.expiresIn }
+            );
+
+            res.status(201).json({
+                user: {
+                    id: userId,
+                    name,
+                    email
+                },
+                token
+            });
+        } catch (error) {
+            console.error('Error registering user:', error);
+            res.status(500).json({ message: 'Error registering user' });
         }
-
-        res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    static async me(req: Request, res: Response){
-        res.json(req.user);
+    async login(req: Request, res: Response): Promise<void> {
+        try {
+            const { email, password } = req.body;
+
+            if (!email || !password) {
+                res.status(400).json({ message: 'Email and password are required' });
+                return;
+            }
+
+            const [users] = await pool.query(
+                'SELECT * FROM users WHERE email = ?',
+                [email]
+            );
+
+            if ((users as any[]).length === 0) {
+                res.status(401).json({ message: 'Invalid credentials' });
+                return;
+            }
+
+            const user = (users as any[])[0];
+
+            const isPasswordValid = await bcrypt.compare(password, user.password);
+
+            if (!isPasswordValid) {
+                res.status(401).json({ message: 'Invalid credentials' });
+                return;
+            }
+
+            const token = jwt.sign(
+                { id: user.id, email: user.email, name: user.name },
+                config.auth.jwtSecret,
+                { expiresIn: config.auth.expiresIn }
+            );
+
+            res.json({
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email
+                },
+                token
+            });
+        } catch (error) {
+            console.error('Error logging in:', error);
+            res.status(500).json({ message: 'Error logging in' });
+        }
     }
 
+    async getProfile(req: Request, res: Response): Promise<void> {
+        try {
+            const userId = (req as any).user.id;
+
+            const [users] = await pool.query(
+                'SELECT id, name, email, created_at FROM users WHERE id = ?',
+                [userId]
+            );
+
+            if ((users as any[]).length === 0) {
+                res.status(404).json({ message: 'User not found' });
+                return;
+            }
+
+            res.json((users as any[])[0]);
+        } catch (error) {
+            console.error('Error getting user profile:', error);
+            res.status(500).json({ message: 'Error retrieving user profile' });
+        }
+    }
 }
-
-export default AuthController;
